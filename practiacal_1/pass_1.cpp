@@ -258,11 +258,13 @@ void handleLine(vector<string> line)
         if (dp.find(word) != dp.end())
         {
             currInter += dp[word];
+            currInter += " ";
         }
 
         else if (Utility::isConstant(word))
         {
             currInter += Utility::getConstantString(word);
+            currInter += " ";
         }
 
         else if (Utility::isSymbol(word))
@@ -270,18 +272,22 @@ void handleLine(vector<string> line)
 
             if (i == 0)
             {
-                currInter += Utility::addSymbol(word, counter);
+               Utility::addSymbol(word, counter);
             }
             else
             {
                 currInter += Utility::addSymbol(word);
+                currInter += " ";
             }
+            
         }
         else
         {
             currInter += Utility::addLiteral(word);
+            currInter += " ";
         } 
     }
+    
     intermediateCode.push_back(currInter);
 
     
