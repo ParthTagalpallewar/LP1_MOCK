@@ -87,6 +87,47 @@ class Utils{
 
 
     }
+
+    static void saveMnt(){
+
+        fstream fout;
+        fout.open("mnt.txt", ios::out);
+
+        for(pair<string, int> data: mnt){
+            fout << data.first << " " << data.second << endl;
+        }
+    }
+
+    static void savekpd(){
+
+        fstream fout;
+        fout.open("kpd.txt", ios::out);
+
+        for(pair<string, string> data: kpd){
+            fout << data.first << " " << data.second << endl;
+        }
+    }
+
+    static void savemdt(){
+
+        fstream fout;
+        fout.open("mdt.txt", ios::out);
+
+        for(string data: mdt){
+            fout << data << endl;
+        }
+
+    }
+
+    static void savemaincode(){
+        fstream fout;
+        fout.open("pass2_input.txt", ios::out);
+
+        string line;
+        while(getline(fin, line)){
+            fout << line << endl;
+        }
+    }
 };
 
 void handleMacro(){
@@ -151,8 +192,6 @@ void handleMacro(){
         mdt.push_back(output);
 
     }
-
-
 }
 
 int main(){
@@ -176,11 +215,8 @@ int main(){
         }
     }
 
-    cout << "MDT Table" << endl;
-    for(string data: mdt){
-        cout << data << endl;
-    }
-
-    
-
+    Utils::saveMnt();
+    Utils::savekpd();
+    Utils::savemdt();
+    Utils::savemaincode();
 }
