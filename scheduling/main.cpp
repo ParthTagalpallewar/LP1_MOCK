@@ -26,6 +26,10 @@ public:
         cout << endl;
     }
 
+    Process(int burst_time){
+        this->burst_time = burst_time;
+    }
+    
     void calculate_turn_around_time(){
         this->turn_around_time = this->completion_time - this->arrival_time;
     }
@@ -69,6 +73,7 @@ public:
 
     }
 
+    //sort processes according to arrival time
     void sort_processes(){
 
         for(int i=0; i<n; i++){
@@ -119,13 +124,51 @@ public:
         
     }
 
+    void sjf(){
+
+        //sort process according to arrival time
+        sort_processes();
+        int timer = 0;
+        int completed_processes = 0;
+
+        while(completed_processes < n){
+
+            //choose process who have arrival time <= timer and min burst time != 0
+            Process* curr = new Process(99999);
+            for(Process* process: processes){
+                if(process->arrival_time <= timer && process->burst_time != 0 && process->burst_time < curr->burst_time){
+                    curr = process;
+                }
+               
+            }
+            curr->burst_time -= 1;
+
+            if (curr->burst_time == 0)
+            {
+                curr->completion_time = timer + 1;
+                completed_processes += 1;
+            }
+            timer += 1;
+        }
+
+        for (Process *process : processes)
+        {
+            process->calculate_turn_around_time();
+            process->calculate_waiting_time();
+            process->print();
+        }
+    }
+
+    
 };
 
 int main(){
 
     Scheduling scheduling;
-    scheduling.fcfs();
-
+   scheduling.sjf();
+    // for(Process* p: scheduling.processes){
+    //     cout << p->name << " " << p->arrival_time << " " << p->burst_time << endl;
+    // }
 
 
 }
